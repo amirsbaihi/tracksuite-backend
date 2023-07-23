@@ -32,7 +32,6 @@ COPY --from=builder /usr/app/node_modules ./node_modules/
 COPY --from=builder /usr/app/package*.json ./
 
 
-COPY .env .
 
 
 EXPOSE 4000
