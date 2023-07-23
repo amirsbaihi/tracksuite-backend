@@ -1,0 +1,109 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Product {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  title: String!
+  description: String!
+  optionNames: [String!]!
+  variants: [Variant!]!
+  brand: String!
+  category: String!
+  parent: String!
+  owner: String!
+  allMedia: [String!]!
+  priceRange: [Float!]!
+  totQuantity: Int!
+  variantNumber: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Variant {
+  optionValues: [String!]!
+  media: [String!]!
+  barcode: String!
+  price: Float!
+  quantity: Int!
+}
+
+type Shop {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String!
+  address: Address!
+  productCount: Int!
+  media: [String!]!
+}
+
+type Address {
+  street: String!
+  region: String!
+  city: String!
+  postcode: String!
+  number: String!
+  country: String!
+  province: String!
+}
+
+type Query {
+  product(id: String!): Product!
+  products(skip: Int! = 0, take: Int! = 25): [Product!]!
+  shop(id: String!): Shop!
+  shops(skip: Int! = 0, take: Int! = 25): [Shop!]!
+}
+
+type Mutation {
+  addProduct(newProductData: NewProductInput!): Product!
+  removeProduct(id: String!): Boolean!
+  addShop(newShopData: NewShopInput!): Shop!
+  removeShop(id: String!): Boolean!
+}
+
+input NewProductInput {
+  title: String!
+  description: String!
+  optionNames: [String!]!
+  variants: [NewVariantInput!]!
+  brand: String!
+  category: String!
+  parent: String
+  owner: String!
+}
+
+input NewVariantInput {
+  optionValues: [String!]!
+  media: [String!]!
+  barcode: String!
+  price: Float!
+  quantity: Float!
+}
+
+input NewShopInput {
+  name: String!
+  description: String!
+  address: NewAddressInput!
+}
+
+input NewAddressInput {
+  street: String!
+  region: String!
+  city: String!
+  postcode: String!
+  number: String!
+  country: String!
+  province: String!
+}
+
+type Subscription {
+  productAdded: Product!
+  shopAdded: Shop!
+}

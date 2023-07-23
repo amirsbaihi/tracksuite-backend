@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs https//pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+}
+
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Product{
+  id  String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt  DateTime?  @default(now())  
+  updatedAt  DateTime?  @updatedAt
+
+  title String
+  description String
+  brand String
+  category String
+  parent String?  
+  owner String
+  optionNames String[]
+
+  variants Variant[]
+
+  @@unique([owner, title])
+}
+
+type Variant{
+  optionValues String[]
+  media String[]
+  barcode String
+  price Float
+  quantity Int
+}
+
+model User{
+  id  String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt  DateTime?  @default(now())  
+  updatedAt  DateTime?  @updatedAt
+
+  email String @unique
+  name String
+  surname String
+  shops String[]
+}
+
+model Shop{
+  id  String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt  DateTime?  @default(now())  
+  updatedAt  DateTime?  @updatedAt
+
+  name String @unique
+  description String
+  address Address
+  media String[]
+}
+
+type Address{
+  street String
+  region String
+  city String
+  postcode String
+  number String
+  country String
+  province String
+}
+
+model Credentials {
+  id  String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt  DateTime?  @default(now())  
+  updatedAt  DateTime?  @updatedAt
+
+  email String @unique
+  password String
+}
